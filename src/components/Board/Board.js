@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Card } from '../Card/Card.js'
-import search from '@jukben/emoji-search'
+import { Card } from '../Card/Card'
+// import search from '@jukben/emoji-search'
+import { food } from '../Emoji/Emoji'
 import './Board.css'
 
 const Store = {
-    emojis: search('food').map(item => item.char).filter(item => item),
-    // emojis: Array.from(new Set(['🍇', '🍈', '🍉', '🍊', '🍋', '🍌', '🍍', '🍎', '🍏', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '🥥', '🥑', '🍆', '🥔', '🥕', '🌽', '🌶', '🥒', '🥦', '🍄', '🥜', '🌰', '🍞', '🥐', '🥖', '🥨', '🥞', '🧀', '🍖', '🍗', '🥩', '🥓', '🍔', '🍟', '🍕', '🌭', '🥪', '🌮', '🌯', '🍳', '🍲', '🥣', '🥗', '🍿', '🥫', '🍱', '🍘', '🍙', '🍚', '🍛', '🍜', '🍝', '🍠', '🍢', '🍣', '🍤', '🍥', '🍡', '🥟', '🥠', '🥡', '🍦', '🍧', '🍨', '🍩', '🍪', '🎂', '🍰', '🥧', '🍫', '🍬', '🍭', '🍮', '🍯', '🍼', '🥛', '☕', '🍵', '🍶', '🍾', '🍷', '🍸', '🍹', '🍺', '🍻', '🥂', '🥃', '🥤', '🥢', '🍽', '🍴', '🥄'])),
+    emojis: food,
     getRandomIndex: maxValue => Math.floor(Math.random() * maxValue),
     shuffle: array => {
         for (let i = array.length - 1; i > 0; i--) {

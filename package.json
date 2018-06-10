@@ -6,8 +6,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4",
-    "@jukben/emoji-search": "^1.1.5"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
