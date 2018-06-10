@@ -30,7 +30,7 @@ export class Timer extends Component {
     }
 
     start() {
-        this.timer = setInterval(this.tick, 80)
+        this.timer = setInterval(this.tick, 50)
     }
 
     stop() {
