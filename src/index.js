@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 WebFont.load({
     google: {
-        families: ['Jua', 'sans-serif']
+        families: ['Jua', 'Share Tech Mono']
     }
 });
 

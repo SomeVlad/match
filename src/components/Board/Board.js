@@ -4,7 +4,7 @@ import { food } from '../Emoji/Emoji'
 import './Board.css'
 
 const Store = {
-    emojis: food,
+    emojis: food.filter(Boolean),
     getRandomIndex: maxValue => Math.floor(Math.random() * maxValue),
     shuffle: array => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -39,7 +39,6 @@ export class Board extends Component {
     }
 
     checkWinCondition() {
-        debugger
         if (this.state.solvedCards.length === this.state.values.length) {
             this.props.onWin()
         }
@@ -73,7 +72,7 @@ export class Board extends Component {
     handleCardClick(index) {
         if (this.state.paused) {
             this.setState({ paused: false })
-            this.props.onClick()
+            this.props.onFirstClick()
         }
         if (!this.state.solvedCards.includes(index) && !this.state.flippedCards.includes(index)) {
             this.flipCard(index)
@@ -84,7 +83,7 @@ export class Board extends Component {
         return (
             <div className='board'>
                 {this.state.values.map((value, index) => (
-                    <Card
+                    value && <Card
                         key={`${value}-${index}`}
                         index={index}
                         errored={this.state.erroredCards.includes(index)}
