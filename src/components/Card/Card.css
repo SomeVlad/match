@@ -1,0 +1,60 @@
+.flipper {
+    position: relative;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10vw;
+    transition: 0.3s;
+    transform-style: preserve-3d;
+    margin: 10px;
+}
+
+.flipper::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
+
+.flipper.flipped {
+    transform: rotateY(-180deg);
+}
+
+.flipper.solved {
+    transform: rotateY(-180deg);
+}
+
+.flipper.solved .back {
+    border: 1px solid green;
+}
+
+.flipper.errored .back {
+    border: 1px solid red;
+}
+
+.front, .back {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+    z-index: 2;
+    /* for firefox 31 */
+    transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+    transform: rotateY(180deg);
+}
+
+.back span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
