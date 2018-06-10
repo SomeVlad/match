@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card } from '../Card/Card'
-// import search from '@jukben/emoji-search'
 import { food } from '../Emoji/Emoji'
 import './Board.css'
 
@@ -26,6 +25,7 @@ const Store = {
 
 export class Board extends Component {
     state = {
+        paused: true,
         values: [],
         disabled: false,
         flippedCards: [],
@@ -38,6 +38,13 @@ export class Board extends Component {
         this.state.values = Store.getArrayOfDoubles(this.props.size ** 2)
     }
 
+    checkWinCondition() {
+        debugger
+        if (this.state.solvedCards.length === this.state.values.length) {
+            this.props.onWin()
+        }
+    }
+
     checkFlipped() {
         const { values, flippedCards } = this.state
         if (flippedCards.length !== 2) return
@@ -45,7 +52,7 @@ export class Board extends Component {
             this.setState(prevState => ({
                 solvedCards: [...prevState.solvedCards, ...prevState.flippedCards],
                 flippedCards: []
-            }))
+            }), () => this.checkWinCondition())
         } else {
             this.setState({ disabled: true, erroredCards: [...flippedCards] }, () => {
                 setTimeout(() => this.setState({ flippedCards: [], erroredCards: [], disabled: false }), 300)
@@ -64,6 +71,10 @@ export class Board extends Component {
     }
 
     handleCardClick(index) {
+        if (this.state.paused) {
+            this.setState({ paused: false })
+            this.props.onClick()
+        }
         if (!this.state.solvedCards.includes(index) && !this.state.flippedCards.includes(index)) {
             this.flipCard(index)
         }
