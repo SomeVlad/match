@@ -13,7 +13,7 @@ export class Card extends Component {
     
     render() {
         const { flipped, solved, errored } = this.props
-        const className = `flipper${flipped ? ' flipped' : ''}${solved ? ' solved' : ''}${errored ? ' errored' : ''}`
+        const className = `card${flipped ? ' flipped' : ''}${solved ? ' solved' : ''}${errored ? ' errored' : ''}`
         return (
             <div
                 className={className}
