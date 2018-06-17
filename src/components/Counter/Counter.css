@@ -1,4 +1,5 @@
-.timer {
+.counter {
     display: inline-block;
     font-family: 'Share Tech Mono', monospace;
+    margin-right: 60px;
 }

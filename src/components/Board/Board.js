@@ -26,16 +26,11 @@ const Store = {
 export class Board extends Component {
     state = {
         paused: true,
-        values: [],
+        values: Store.getArrayOfDoubles(this.props.size ** 2),
         disabled: false,
         flippedCards: [],
         erroredCards: [],
         solvedCards: []
-    }
-
-    constructor(props) {
-        super(props)
-        this.state.values = Store.getArrayOfDoubles(this.props.size ** 2)
     }
 
     checkWinCondition() {
@@ -76,6 +71,9 @@ export class Board extends Component {
         }
         if (!this.state.solvedCards.includes(index) && !this.state.flippedCards.includes(index)) {
             this.flipCard(index)
+        }
+        if (!this.state.disabled && !this.state.disabled && !this.state.solvedCards.includes(index) && !this.state.flippedCards.includes(index)) {
+            this.props.onTouch()
         }
     }
 

@@ -10,16 +10,7 @@ export class Card extends Component {
         front: PropTypes.string,
         back: PropTypes.string.isRequired
     }
-    /*state = {
-        flipped: false
-    }*/
-
-    /*flip() {
-        const { flipped } = this.props
-        this.setState({ flipped: !flipped })
-        this.props.onClick()
-    }*/
-
+    
     render() {
         const { flipped, solved, errored } = this.props
         const className = `flipper${flipped ? ' flipped' : ''}${solved ? ' solved' : ''}${errored ? ' errored' : ''}`

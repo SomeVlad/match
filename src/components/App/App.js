@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Board } from '../Board/Board'
 import { Timer } from '../Timer/Timer'
+import { Counter } from '../Counter/Counter'
 import './App.css'
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
     size = this.levelOptions[this.level].size
     maxItemWidth = 200
     state = {
+        touches: 0,
         startedAt: null,
         stopped: false
     }
@@ -20,6 +22,13 @@ class App extends Component {
         if (!this.state.startedAt) {
             this.setState({ startedAt: Date.now() })
         }
+
+    }
+
+    onTouch() {
+        this.setState(prevState => ({
+            touches: prevState.touches + 1
+        }))
     }
 
     stop() {
@@ -30,6 +39,7 @@ class App extends Component {
         return (
             <main className='app'>
                 <h1>Match! 🙌</h1>
+                <Counter touches={this.state.touches} />
                 <Timer stopped={this.state.stopped} startedAt={this.state.startedAt} />
                 <style>{`
                     :root {
@@ -44,12 +54,11 @@ class App extends Component {
                             font-size: 80px;
                         }
                     }
-
-                    body {
-                        font-family: "Jua", sans-serif;
-                    }
                 `}</style>
-                <Board size={this.size} onFirstClick={() => this.start()} onWin={() => this.stop()} />
+                <Board size={this.size}
+                       onFirstClick={() => this.start()}
+                       onWin={() => this.stop()}
+                       onTouch={() => this.onTouch()} />
             </main>
         )
     }
