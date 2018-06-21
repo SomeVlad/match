@@ -33,7 +33,7 @@ const STATES = {
     FLIP_CARD: ({ prevState, index }) => ({
         current: 'FLIP_CARD',
         touches: !prevState.disabled ? prevState.touches + 1 : prevState.touches,
-        disabled: true,
+        disabled: prevState.flippedCards.length === 1,
         flippedCards: [...prevState.flippedCards, index]
     }),
     CARD_FLIPPED: {
@@ -62,12 +62,10 @@ const STATES = {
     }
 }
 
+const delay = (fn) => setTimeout(fn, OPTIONS.delay)
+
 class App extends Component {
     state = STATES.INITIAL
-
-    delay(fn) {
-        setTimeout(fn, OPTIONS.delay)
-    }
 
     checkWinCondition() {
         if (this.state.solvedCards.length === this.state.values.length) {
@@ -82,7 +80,7 @@ class App extends Component {
             this.setState(prevState => STATES.MATCH_FOUND({ prevState }), () => this.checkWinCondition())
         } else {
             this.setState(prevState => STATES.SHOW_MISTAKE({ prevState }),
-                () => this.delay(() => this.setState(STATES.MATCH_NOT_FOUND)))
+                () => delay(() => this.setState(STATES.MATCH_NOT_FOUND)))
         }
     }
 
@@ -97,7 +95,7 @@ class App extends Component {
         }
         if (!this.state.disabled && !this.state.solvedCards.includes(index) && !this.state.flippedCards.includes(index)) {
             this.setState(prevState => STATES.FLIP_CARD({ prevState, index }), () => {
-                this.delay(() => this.setState(STATES.CARD_FLIPPED))
+                delay(() => this.setState(STATES.CARD_FLIPPED))
                 this.checkFlippedCard()
             })
         }
