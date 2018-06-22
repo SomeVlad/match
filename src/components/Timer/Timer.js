@@ -3,7 +3,8 @@ import './Timer.css'
 
 export class Timer extends Component {
     static defaultProps = {
-        timerGoing: false
+        timerGoing: false,
+        isReset: true
     }
     state = {
         startedAt: null,
@@ -24,6 +25,10 @@ export class Timer extends Component {
         }
         if (!this.props.timerGoing && prevProps.timerGoing) {
             this.stop()
+        }
+        if (this.props.isReset && !prevProps.isReset) {
+            this.stop()
+            this.setState({ secondsPassed: 0.0 })
         }
     }
 

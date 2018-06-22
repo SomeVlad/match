@@ -102,6 +102,10 @@ class App extends Component {
 
     }
 
+    reset() {
+        this.setState(STATES.INITIAL)
+    }
+
     componentWillMount() {
         this.setState(STATES.INITIAL)
     }
@@ -109,9 +113,13 @@ class App extends Component {
     render() {
         return (
             <main className='app'>
-                <h1>Match! 🙌</h1>
+                {this.state.current !== 'WIN' ?
+                    <h1>Match! 🙌</h1> :
+                    <h1 onClick={() => this.reset()} className='play-again'>Play again!</h1>
+                }
+
                 <Counter touches={this.state.touches} />
-                <Timer timerGoing={this.state.timerGoing} />
+                <Timer timerGoing={this.state.timerGoing} isReset={this.state.current === 'INITIAL'} />
                 <style>{`
                     :root {
                         --grid-size: ${OPTIONS.size};
