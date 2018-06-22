@@ -16,6 +16,8 @@ const OPTIONS = {
 }
 OPTIONS.size = OPTIONS.levelOptions[OPTIONS.level].size
 
+const getItems = () => Store.getArrayOfDoubles(OPTIONS.size ** 2)
+
 const STATES = {
     INITIAL: {
         name: 'INITIAL', // state name
@@ -25,7 +27,7 @@ const STATES = {
         erroredCards: [], // cards that do not match, 2 max
         flippedCards: [], // flipped, but not solved
         solvedCards: [], // cards with found pairs
-        values: (() => Store.getArrayOfDoubles(OPTIONS.size ** 2))() // array of values for cards
+        values: getItems() // array of values for cards
     },
     START_TIMER: {
         timerGoing: true
@@ -106,7 +108,7 @@ class App extends Component {
     }
 
     reset() {
-        this.setState(STATES.INITIAL)
+        this.setState({ ...STATES.INITIAL, values: getItems() })
     }
 
     startTimer() {
