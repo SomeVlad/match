@@ -87,8 +87,12 @@ class App extends Component {
 
     checkWinCondition() {
         if (this.state.solvedCards.length === this.state.values.length) {
-            this.setState(STATES.WIN)
+            this.setState(STATES.WIN, () => alert(this.countScores()))
         }
+    }
+
+    countScores() {
+        return Math.floor(((1 / this.state.touches) * 5 + 2000 / (Date.now() - this.state.startedAt)) * 10000)
     }
 
     handleCardClick(index) {
@@ -131,7 +135,7 @@ class App extends Component {
 
                 <Counter touches={this.state.touches} />
                 <Timer timerGoing={this.state.timerGoing} isReset={this.state.name === 'INITIAL'} />
-                <Score touches={this.state.touches} startedAt={this.state.startedAt} />
+                {/*<Score touches={this.state.touches} startedAt={this.state.startedAt} />*/}
                 <style>{`
                     :root {
                         --grid-size: ${OPTIONS.size};
