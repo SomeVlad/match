@@ -4,18 +4,18 @@ import { Card } from '../Card/Card'
 import './Board.css'
 
 export class Board extends Component {
+    static defaultProps = {
+        flippedCards: [],
+        solvedCards: [],
+        erroredCards: []
+    }
+
     static propTypes = {
         values: PropTypes.arrayOf(PropTypes.string).isRequired,
         flippedCards: PropTypes.arrayOf(PropTypes.number),
         solvedCards: PropTypes.arrayOf(PropTypes.number),
         erroredCards: PropTypes.arrayOf(PropTypes.number),
         onClick: PropTypes.func.isRequired
-    }
-
-    static defaultProps = {
-        flippedCards: [],
-        solvedCards: [],
-        erroredCards: []
     }
 
     render() {
