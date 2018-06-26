@@ -33,7 +33,7 @@
 module.exports = function(fileInfo, api, options) {
     const j = api.jscodeshift
 
-    const ReactUtils = require('./utils/ReactUtils')(j)
+    const ReactUtils = require('./react-utils')(j)
 
     const printOptions = options.printOptions || { quote: 'single', trailingComma: true }
 
