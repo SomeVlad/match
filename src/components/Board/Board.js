@@ -1,26 +1,38 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Card } from '../Card/Card'
 import './Board.css'
 
 export class Board extends Component {
-    handleCardClick(index) {
-        this.props.onClick(index)
+    static propTypes = {
+        values: PropTypes.arrayOf(PropTypes.string).isRequired,
+        flippedCards: PropTypes.arrayOf(PropTypes.number),
+        solvedCards: PropTypes.arrayOf(PropTypes.number),
+        erroredCards: PropTypes.arrayOf(PropTypes.number),
+        onClick: PropTypes.func.isRequired
+    }
+
+    static defaultProps = {
+        flippedCards: [],
+        solvedCards: [],
+        erroredCards: []
     }
 
     render() {
+        const { erroredCards, flippedCards, solvedCards, onClick, values } = this.props
         return (
             <div className="board">
-                {this.props.values.map(
+                {values.map(
                     (value, index) =>
                         value && (
                             <Card
                                 key={`${value}-${index}`}
                                 index={index}
-                                errored={this.props.erroredCards.includes(index)}
-                                flipped={this.props.flippedCards.includes(index)}
-                                solved={this.props.solvedCards.includes(index)}
+                                errored={erroredCards.includes(index)}
+                                flipped={flippedCards.includes(index)}
+                                solved={solvedCards.includes(index)}
                                 back={value}
-                                onClick={() => this.props.onClick(index)}
+                                onClick={() => onClick(index)}
                             />
                         )
                 )}

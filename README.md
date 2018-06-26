@@ -1,18 +1,24 @@
-# Match 
+# Match
 
-## TODO 
+## TODO
 
-#### Mechanics
-- [x] moves counter 
-- [ ] scores or something based on time and moves
-- [ ] es-lint
+#### Mechanics and codebase
 
-#### UI 
-- [ ] congratulations
-- [ ] overall improvements so cards are not just squares
-- [ ] emojis for non-apple devices
+-   [x] moves counter
+-   [x] prettier
+-   [x] scoring system
+-   [ ] keeping scoreboard locally
+-   [ ] autopilot
 
-#### Cranking up the difficulty: 
-- [ ] start with lower amount of cards 
-- [ ] BW filter 
-- [ ] dynamic card backgrounds
+#### UI
+
+-   [x] play again button
+-   [ ] congratulations
+-   [ ] overall improvements so cards are not just squares
+-   [ ] emojis for non-apple devices
+
+#### Cranking up the difficulty:
+
+-   [ ] start with lower amount of cards
+-   [ ] BW filter
+-   [ ] dynamic card backgrounds

@@ -15,7 +15,7 @@
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
         "fix": "./node_modules/.bin/jscodeshift -t ./node_modules/react-codemod/transforms/sort-comp.js ./src",
-        "precommit": "pretty-quick --staged"
+        "precommit": "npm run fix && pretty-quick --staged"
     },
     "devDependencies": {
         "husky": "^0.14.3",

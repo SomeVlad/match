@@ -3,6 +3,7 @@ import { Board } from '../Board/Board'
 import { Timer } from '../Timer/Timer'
 import { Counter } from '../Counter/Counter'
 import { Store } from '../ItemsStore/ItemsStore'
+import { Score } from '../Score/Score'
 import './App.css'
 
 const OPTIONS = {
@@ -27,6 +28,7 @@ const STATES = {
         erroredCards: [], // cards that do not match, 2 max
         flippedCards: [], // flipped, but not solved
         solvedCards: [], // cards with found pairs
+        startedAt: null, // when this round has started
         values: getItems() // array of values for cards
     },
     START_TIMER: {
@@ -36,7 +38,8 @@ const STATES = {
         name: 'FLIP_CARD',
         touches: !prevState.disabled ? prevState.touches + 1 : prevState.touches,
         disabled: prevState.flippedCards.length === 1,
-        flippedCards: [...prevState.flippedCards, index]
+        flippedCards: [...prevState.flippedCards, index],
+        startedAt: !prevState.startedAt ? Date.now() : prevState.startedAt
     }),
     CARD_FLIPPED: {
         disabled: false
@@ -128,19 +131,20 @@ class App extends Component {
 
                 <Counter touches={this.state.touches} />
                 <Timer timerGoing={this.state.timerGoing} isReset={this.state.name === 'INITIAL'} />
+                <Score touches={this.state.touches} startedAt={this.state.startedAt} />
                 <style>{`
-                :root {
-                    --grid-size: ${OPTIONS.size};
-                    --grid-item-width: ${100 / OPTIONS.size}%;
-                    --grid-item-max-width: ${OPTIONS.maxItemWidth}px;
-                    --grid-max-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px;
-                }
-
-                @media (min-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px) {
-                    .card {
-                        font-size: 80px;
+                    :root {
+                        --grid-size: ${OPTIONS.size};
+                        --grid-item-width: ${100 / OPTIONS.size}%;
+                        --grid-item-max-width: ${OPTIONS.maxItemWidth}px;
+                        --grid-max-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px;
                     }
-                }
+
+                    @media (min-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px) {
+                        .card {
+                            font-size: 80px;
+                        }
+                    }
                 `}</style>
                 <Board
                     size={OPTIONS.size}
