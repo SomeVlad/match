@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card } from '../Card/Card'
+import chroma from 'chroma-js'
 import './Board.css'
 
 export class Board extends Component {
@@ -18,6 +19,11 @@ export class Board extends Component {
         onClick: PropTypes.func.isRequired
     }
 
+    scale = chroma
+        .scale(['#edf8b1', '#7fcdbb', '#2c7fb8'])
+        .mode('hsl')
+        .colors(16)
+
     render() {
         const { erroredCards, flippedCards, solvedCards, onClick, values } = this.props
         return (
@@ -33,6 +39,10 @@ export class Board extends Component {
                                 solved={solvedCards.includes(index)}
                                 back={value}
                                 onClick={() => onClick(index)}
+                                backgroundColorFront={this.scale[index]}
+                                backgroundColorBack={chroma(this.scale[index])
+                                    .brighten(1)
+                                    .hex()}
                             />
                         )
                 )}
