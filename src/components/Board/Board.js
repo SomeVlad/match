@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Card } from '../Card/Card'
 import chroma from 'chroma-js'
 import './Board.css'
 
-export class Board extends Component {
+export class Board extends PureComponent {
     static defaultProps = {
         flippedCards: [],
         solvedCards: [],

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import './Counter.css'
 
-export class Counter extends Component {
+export class Counter extends PureComponent {
     static defaultProps = { touches: 0 }
     static propTypes = { touches: PropTypes.number.isRequired }
 

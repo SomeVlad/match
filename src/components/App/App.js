@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Board } from '../Board/Board'
 import { Timer } from '../Timer/Timer'
 import { Counter } from '../Counter/Counter'
 import { Store } from '../ItemsStore/ItemsStore'
-import { Score } from '../Score/Score'
+import { Leaderboard } from '../Leaderboard/Leaderboard'
 import './App.css'
 import chroma from 'chroma-js'
 
@@ -14,7 +14,21 @@ const OPTIONS = {
     },
     level: 1,
     maxItemWidth: 200,
-    delay: 300
+    delay: 300,
+    leaderBoardStorageKey: 'leaderBoard',
+    defaultLeaderboard: {
+        3000: ['Robot1'],
+        2900: ['Robot2'],
+        2800: ['Robot3'],
+        2700: ['Robot4'],
+        2600: ['Robot5'],
+        2500: ['Robot6'],
+        2400: ['Robot7'],
+        2300: ['Robot8'],
+        2200: ['Robot9'],
+        2100: ['Robot10']
+    },
+    defaultUsername: 'you'
 }
 OPTIONS.size = OPTIONS.levelOptions[OPTIONS.level].size
 
@@ -22,7 +36,7 @@ const getItems = () => Store.getArrayOfDoubles(OPTIONS.size ** 2)
 
 const STATES = {
     INITIAL: {
-        name: 'INITIAL', // state name
+        status: 'INITIAL', // state status
         touches: 0, // touches counter
         timerGoing: false, // is timer going
         disabled: false, // whether touches do not count
@@ -30,13 +44,15 @@ const STATES = {
         flippedCards: [], // flipped, but not solved
         solvedCards: [], // cards with found pairs
         startedAt: null, // when this round has started
-        values: getItems() // array of values for cards
+        values: getItems(), // array of values for cards,
+        leaderBoard: JSON.parse(localStorage.getItem(OPTIONS.leaderBoardStorageKey)) || OPTIONS.defaultLeaderboard,
+        showLeaderboard: false // whether to show leaderboard popup
     },
     START_TIMER: {
         timerGoing: true
     },
     FLIP_CARD: ({ prevState, index }) => ({
-        name: 'FLIP_CARD',
+        status: 'FLIP_CARD',
         touches: !prevState.disabled ? prevState.touches + 1 : prevState.touches,
         disabled: prevState.flippedCards.length === 1,
         flippedCards: [...prevState.flippedCards, index],
@@ -46,26 +62,29 @@ const STATES = {
         disabled: false
     },
     MATCH_FOUND: ({ prevState }) => ({
-        name: 'MATCH_FOUND',
+        status: 'MATCH_FOUND',
         solvedCards: [...prevState.solvedCards, ...prevState.flippedCards],
         flippedCards: []
     }),
     SHOW_MISTAKE: ({ prevState }) => ({
-        name: 'SHOW_MISTAKE',
+        status: 'SHOW_MISTAKE',
         disabled: true,
         erroredCards: [...prevState.flippedCards]
     }),
     MATCH_NOT_FOUND: {
-        name: 'MATCH_NOT_FOUND',
+        status: 'MATCH_NOT_FOUND',
         flippedCards: [],
         erroredCards: [],
         disabled: false
     },
-    WIN: {
-        name: 'WIN',
+    WIN: ({ prevState, updatedLeaderboard, userScore }) => ({
+        status: 'WIN',
         disabled: true,
-        timerGoing: false
-    }
+        timerGoing: false,
+        showLeaderboard: true,
+        leaderBoard: updatedLeaderboard,
+        userScore
+    })
 }
 
 const delay = fn => setTimeout(fn, OPTIONS.delay)
@@ -76,7 +95,7 @@ const cardsScale = chroma
     .mode('hsl')
     .colors(16)
 
-class App extends Component {
+class App extends PureComponent {
     state = STATES.INITIAL
 
     checkFlippedCard() {
@@ -94,7 +113,14 @@ class App extends Component {
 
     checkWinCondition() {
         if (this.state.solvedCards.length === this.state.values.length) {
-            this.setState(STATES.WIN, () => alert(this.countScores()))
+            const score = this.countScores()
+            const leaderboardCopy = Object.assign({}, this.state.leaderBoard)
+            leaderboardCopy[score] = leaderboardCopy[score] || []
+            leaderboardCopy[score].push(OPTIONS.defaultUsername)
+            this.setState(
+                prevState => STATES.WIN({ prevState, updatedLeaderboard: leaderboardCopy, userScore: score }),
+                () => localStorage.setItem(OPTIONS.leaderBoardStorageKey, JSON.stringify(leaderboardCopy))
+            )
         }
     }
 
@@ -103,7 +129,7 @@ class App extends Component {
     }
 
     handleCardClick(index) {
-        if (this.state.name === STATES.INITIAL.name) {
+        if (this.state.status === STATES.INITIAL.status) {
             this.startTimer()
         }
         if (
@@ -132,17 +158,9 @@ class App extends Component {
     render() {
         return (
             <main className="app">
-                {this.state.name !== STATES.WIN.name ? (
-                    <h1>Match! 🙌</h1>
-                ) : (
-                    <h1 onClick={() => this.reset()} className="play-again">
-                        Play again!
-                    </h1>
-                )}
-
+                <h1>Match! 🙌</h1>
                 <Counter touches={this.state.touches} />
-                <Timer timerGoing={this.state.timerGoing} isReset={this.state.name === 'INITIAL'} />
-                {/*<Score touches={this.state.touches} startedAt={this.state.startedAt} />*/}
+                <Timer timerGoing={this.state.timerGoing} isReset={this.state.status === 'INITIAL'} />
                 <style>{`
                     :root {
                         --grid-size: ${OPTIONS.size};
@@ -150,6 +168,7 @@ class App extends Component {
                         --grid-item-max-width: ${OPTIONS.maxItemWidth}px;
                         --grid-max-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px;
                         --background-gradient: linear-gradient(${backgroundScale(0)}, ${backgroundScale(1)});
+                        --body-overflow: ${this.state.showLeaderboard ? 'hidden' : 'scroll'}
                     }
 
                     @media (min-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px) {
@@ -166,6 +185,12 @@ class App extends Component {
                     solvedCards={this.state.solvedCards}
                     cardsScale={cardsScale}
                     onClick={index => this.handleCardClick(index)}
+                />
+                <Leaderboard
+                    show={this.state.showLeaderboard}
+                    leaderBoard={this.state.leaderBoard}
+                    userScore={this.state.userScore}
+                    reset={() => this.reset()}
                 />
             </main>
         )

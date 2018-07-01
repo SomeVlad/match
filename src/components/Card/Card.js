@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import './Card.css'
 
-export class Card extends Component {
+export class Card extends PureComponent {
     static defaultProps = {
         front: '',
         backgroundColorBack: '',

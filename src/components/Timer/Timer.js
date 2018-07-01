@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import './Timer.css'
 
-export class Timer extends Component {
+export class Timer extends PureComponent {
     static defaultProps = {
         timerGoing: false,
         isReset: true

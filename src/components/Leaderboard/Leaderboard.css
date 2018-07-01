@@ -1,0 +1,31 @@
+.score {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    margin-left: 60px;
+}
+
+.leaderboard {
+    max-width: 128px;
+    margin: 0 auto;
+}
+
+.list {
+    overflow-y: scroll;
+    max-height: 200px;
+}
+
+ol {
+    border: 1px solid black;
+}
+
+li.red {
+    color: red;
+}
+
+.play-again {
+    text-decoration: underline;
+    text-decoration-skip: ink;
+    color: #06aaed;
+    cursor: pointer;
+    margin-top: 20px;
+}
