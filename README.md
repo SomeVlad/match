@@ -13,8 +13,9 @@
 #### UI
 
 -   [x] play again button
+-   [x] overall improvements so cards are not just squares
+-   [ ] better UI
 -   [ ] congratulations
--   [ ] overall improvements so cards are not just squares
 -   [ ] emojis for non-apple devices
 
 #### Cranking up the difficulty:

@@ -1,5 +1,13 @@
 .app {
     text-align: center;
+    background: var(--background-gradient);
+    padding-top: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.app h1 {
+    margin-top: 0;
 }
 
 .play-again {

@@ -19,13 +19,8 @@ export class Board extends Component {
         onClick: PropTypes.func.isRequired
     }
 
-    scale = chroma
-        .scale(['#edf8b1', '#7fcdbb', '#2c7fb8'])
-        .mode('hsl')
-        .colors(16)
-
     render() {
-        const { erroredCards, flippedCards, solvedCards, onClick, values } = this.props
+        const { erroredCards, flippedCards, solvedCards, onClick, values, cardsScale } = this.props
         return (
             <div className="board">
                 {values.map(
@@ -39,9 +34,9 @@ export class Board extends Component {
                                 solved={solvedCards.includes(index)}
                                 back={value}
                                 onClick={() => onClick(index)}
-                                backgroundColorFront={this.scale[index]}
-                                backgroundColorBack={chroma(this.scale[index])
-                                    .brighten(1)
+                                backgroundColorFront={cardsScale[index]}
+                                backgroundColorBack={chroma(cardsScale[index])
+                                    .brighten(2)
                                     .hex()}
                             />
                         )

@@ -5,6 +5,7 @@ import { Counter } from '../Counter/Counter'
 import { Store } from '../ItemsStore/ItemsStore'
 import { Score } from '../Score/Score'
 import './App.css'
+import chroma from 'chroma-js'
 
 const OPTIONS = {
     levelOptions: {
@@ -68,6 +69,12 @@ const STATES = {
 }
 
 const delay = fn => setTimeout(fn, OPTIONS.delay)
+
+const backgroundScale = chroma.scale(['#92f8e1', '#7fcdbb', '#0054b8']).mode('hsl')
+const cardsScale = chroma
+    .scale(['#ffe901', '#fabd00'])
+    .mode('hsl')
+    .colors(16)
 
 class App extends Component {
     state = STATES.INITIAL
@@ -142,6 +149,7 @@ class App extends Component {
                         --grid-item-width: ${100 / OPTIONS.size}%;
                         --grid-item-max-width: ${OPTIONS.maxItemWidth}px;
                         --grid-max-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px;
+                        --background-gradient: linear-gradient(${backgroundScale(0)}, ${backgroundScale(1)});
                     }
 
                     @media (min-width: ${OPTIONS.maxItemWidth * OPTIONS.size}px) {
@@ -156,6 +164,7 @@ class App extends Component {
                     erroredCards={this.state.erroredCards}
                     flippedCards={this.state.flippedCards}
                     solvedCards={this.state.solvedCards}
+                    cardsScale={cardsScale}
                     onClick={index => this.handleCardClick(index)}
                 />
             </main>
