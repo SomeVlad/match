@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import './Popup.css'
 
 export class Popup extends PureComponent {
+    static defaultProps = {
+        title: 'Popup title',
+        show: false
+    }
     static propTypes = {
         children: PropTypes.node.isRequired,
         title: PropTypes.string.isRequired,
         show: PropTypes.bool.isRequired
-    }
-    static defaultProps = {
-        title: 'Popup title',
-        show: false
     }
     render() {
         const { children, title, show } = this.props

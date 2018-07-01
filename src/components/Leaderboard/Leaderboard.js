@@ -4,14 +4,14 @@ import { Popup } from './../Popup/Popup'
 import './Leaderboard.css'
 
 export class Leaderboard extends PureComponent {
+    static defaultProps = {
+        show: false
+    }
+
     static propTypes = {
         show: PropTypes.bool.isRequired,
         leaderBoard: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
         userScore: PropTypes.number
-    }
-
-    static defaultProps = {
-        show: false
     }
 
     render() {
