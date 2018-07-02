@@ -7,15 +7,15 @@
 -   [x] moves counter
 -   [x] prettier
 -   [x] scoring system
--   [ ] keeping scoreboard locally
+-   [x] keeping scoreboard locally
 -   [ ] autopilot
 
 #### UI
 
 -   [x] play again button
 -   [x] overall improvements so cards are not just squares
+-   [x] congratulations
 -   [ ] better UI
--   [ ] congratulations
 -   [ ] emojis for non-apple devices
 
 #### Cranking up the difficulty:
