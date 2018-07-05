@@ -33,6 +33,8 @@ const OPTIONS = {
 OPTIONS.size = OPTIONS.levelOptions[OPTIONS.level].size
 
 const getItems = () => Store.getArrayOfDoubles(OPTIONS.size ** 2)
+const getLeaderBoard = () =>
+    JSON.parse(localStorage.getItem(OPTIONS.leaderBoardStorageKey)) || OPTIONS.defaultLeaderboard
 
 const STATES = {
     INITIAL: {
@@ -45,7 +47,7 @@ const STATES = {
         solvedCards: [], // cards with found pairs
         startedAt: null, // when this round has started
         values: getItems(), // array of values for cards,
-        leaderBoard: JSON.parse(localStorage.getItem(OPTIONS.leaderBoardStorageKey)) || OPTIONS.defaultLeaderboard,
+        leaderBoard: getLeaderBoard(),
         showLeaderboard: false // whether to show leaderboard popup
     },
     START_TIMER: {
@@ -148,7 +150,7 @@ class App extends PureComponent {
     }
 
     reset() {
-        this.setState({ ...STATES.INITIAL, values: getItems() })
+        this.setState({ ...STATES.INITIAL, values: getItems(), leaderBoard: getLeaderBoard() })
     }
 
     startTimer() {
