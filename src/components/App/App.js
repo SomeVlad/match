@@ -119,7 +119,9 @@ class App extends PureComponent {
             const leaderboardCopy = Object.assign({}, this.state.leaderBoard)
             leaderboardCopy[score] = leaderboardCopy[score] || []
             leaderboardCopy[score].push(OPTIONS.defaultUsername)
-            delete leaderboardCopy[Math.min(...Object.keys(leaderboardCopy))]
+            while (Object.keys(leaderboardCopy).length > Object.keys(OPTIONS.defaultLeaderboard).length) {
+                delete leaderboardCopy[Math.min(...Object.keys(leaderboardCopy))]
+            }
             this.setState(
                 prevState => STATES.WIN({ prevState, updatedLeaderboard: leaderboardCopy, userScore: score }),
                 () => localStorage.setItem(OPTIONS.leaderBoardStorageKey, JSON.stringify(leaderboardCopy))
