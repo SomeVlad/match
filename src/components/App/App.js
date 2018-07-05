@@ -115,10 +115,11 @@ class App extends PureComponent {
 
     checkWinCondition() {
         if (this.state.solvedCards.length === this.state.values.length) {
-            const score = this.countScores()
+            const score = this.countScores().toString()
             const leaderboardCopy = Object.assign({}, this.state.leaderBoard)
             leaderboardCopy[score] = leaderboardCopy[score] || []
             leaderboardCopy[score].push(OPTIONS.defaultUsername)
+            delete leaderboardCopy[Math.min(...Object.keys(leaderboardCopy))]
             this.setState(
                 prevState => STATES.WIN({ prevState, updatedLeaderboard: leaderboardCopy, userScore: score }),
                 () => localStorage.setItem(OPTIONS.leaderBoardStorageKey, JSON.stringify(leaderboardCopy))
@@ -188,12 +189,14 @@ class App extends PureComponent {
                     cardsScale={cardsScale}
                     onClick={index => this.handleCardClick(index)}
                 />
-                <Leaderboard
-                    show={this.state.showLeaderboard}
-                    leaderBoard={this.state.leaderBoard}
-                    userScore={this.state.userScore}
-                    reset={() => this.reset()}
-                />
+                {this.state.showLeaderboard && (
+                    <Leaderboard
+                        show={this.state.showLeaderboard}
+                        leaderBoard={this.state.leaderBoard}
+                        userScore={this.state.userScore}
+                        reset={() => this.reset()}
+                    />
+                )}
             </main>
         )
     }

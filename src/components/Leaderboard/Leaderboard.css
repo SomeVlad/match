@@ -9,16 +9,7 @@
     margin: 0 auto;
 }
 
-.list {
-    overflow-y: scroll;
-    max-height: 200px;
-}
-
-ol {
-    border: 1px solid black;
-}
-
-li.red {
+.leaderboard .red {
     color: red;
 }
 
