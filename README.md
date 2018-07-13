@@ -15,6 +15,7 @@
 -   [x] play again button
 -   [x] overall improvements so cards are not just squares
 -   [x] congratulations
+-   [ ] 100% height
 -   [ ] better UI
 -   [ ] emojis for non-apple devices
 
