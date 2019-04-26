@@ -43,7 +43,7 @@ export class Leaderboard extends Component {
                 </h1>
             </Popup>
         ) : (
-            <Popup title={'🤦‍♀️ Wow, you suck. ☹️'} show={show}>
+            <Popup title={'You can do better!'} show={show}>
                 <p>Go and try again.</p>
                 <h1 onClick={reset} className="play-again">
                     Redeem myself!
